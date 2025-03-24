@@ -1,72 +1,72 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
-class Employee {
-    private static int idCounter = 1;
+class Karyawan {
+    private static int idOtomatis = 1;
     private int id;
-    private String name;
-    private String position;
-    private double salary;
+    private String nama;
+    private String posisi;
+    private double gaji;
 
-    public Employee(String name, String position, double salary) {
-        this.id = idCounter++;
-        this.name = name;
-        this.position = position;
-        this.salary = salary;
+    public Karyawan(String nama, String posisi, double gaji) {
+        this.id = idOtomatis++;
+        this.nama = nama;
+        this.posisi = posisi;
+        this.gaji = gaji;
     }
 
     public int getId() {
         return id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNama(String nama) {
+        this.nama = nama;
     }
 
-    public void setPosition(String position) {
-        this.position = position;
+    public void setPosisi(String posisi) {
+        this.posisi = posisi;
     }
 
-    public void setSalary(double salary) {
-        this.salary = salary;
+    public void setGaji(double gaji) {
+        this.gaji = gaji;
     }
 
     @Override
     public String toString() {
-        return "ID: " + id + "\nNama: " + name + "\nPosisi: " + position + "\nGaji: " + salary + "\n----------------------";
+        return "ID: " + id + "\nNama: " + nama + "\nPosisi: " + posisi + "\nGaji: " + gaji + "\n----------------------";
     }
 }
 
 public class SistemManajemenKaryawan {
-    private static ArrayList<Employee> employees = new ArrayList<>();
+    private static ArrayList<Karyawan> daftarKaryawan = new ArrayList<>();
     private static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
         while (true) {
-            clearScreen();
-            System.out.println("\nSistem Pengelolaan Karyawan di Electrical Workshop");
+            bersihkanLayar();
+            System.out.println("\nSistem Pengelolaan Karyawan di Bengkel Elektrikal");
             System.out.println("1. Tambah Karyawan");
             System.out.println("2. Tampilkan Karyawan");
             System.out.println("3. Perbarui Karyawan");
             System.out.println("4. Hapus Karyawan");
             System.out.println("5. Keluar");
             System.out.print("Pilih menu: ");
-            int choice = scanner.nextInt();
+            int pilihan = scanner.nextInt();
             scanner.nextLine();
 
-            switch (choice) {
+            switch (pilihan) {
                 case 1:
-                    addEmployee();
+                    tambahKaryawan();
                     break;
                 case 2:
-                    displayEmployees();
-                    pressEnterToContinue();
+                    tampilkanKaryawan();
+                    tekanEnterUntukLanjut();
                     break;
                 case 3:
-                    updateEmployee();
+                    perbaruiKaryawan();
                     break;
                 case 4:
-                    deleteEmployee();
+                    hapusKaryawan();
                     break;
                 case 5:
                     System.out.println("Keluar dari program...");
@@ -77,76 +77,63 @@ public class SistemManajemenKaryawan {
         }
     }
 
-    private static void addEmployee() {
-        clearScreen();
+    private static void tambahKaryawan() {
+        bersihkanLayar();
         System.out.print("Masukkan Nama: ");
-        String name = scanner.nextLine();
+        String nama = scanner.nextLine();
 
         System.out.println("Pilih Posisi:");
         System.out.println("1. Teknisi");
         System.out.println("2. Supervisor");
         System.out.println("3. Manajer");
         System.out.print("Pilihan: ");
-        int choice = scanner.nextInt();
+        int pilihan = scanner.nextInt();
         scanner.nextLine();
 
-        String position;
-        switch (choice) {
-            case 1:
-                position = "Teknisi";
-                break;
-            case 2:
-                position = "Supervisor";
-                break;
-            case 3:
-                position = "Manajer";
-                break;
-            default:
-                position = "Teknisi";
-        }
+        String posisi = (pilihan == 1) ? "Teknisi" : (pilihan == 2) ? "Supervisor" : "Manajer";
 
         System.out.print("Masukkan Gaji: ");
-        double salary = scanner.nextDouble();
+        double gaji = scanner.nextDouble();
         scanner.nextLine(); 
 
-        employees.add(new Employee(name, position, salary));
+        daftarKaryawan.add(new Karyawan(nama, posisi, gaji));
         System.out.println("Karyawan berhasil ditambahkan!");
 
-        pressEnterToContinue();
+        tekanEnterUntukLanjut();
     }
 
-    private static void displayEmployees() {
-        clearScreen();
-        if (employees.isEmpty()) {
+    private static void tampilkanKaryawan() {
+        bersihkanLayar();
+        if (daftarKaryawan.isEmpty()) {
             System.out.println("Tidak ada karyawan.");
         } else {
-            for (Employee emp : employees) {
-                System.out.println(emp);
+            for (Karyawan karyawan : daftarKaryawan) {
+                System.out.println(karyawan);
             }
         }
     }
 
-    private static void updateEmployee() {
-        clearScreen();
-        displayEmployees();
+    private static void perbaruiKaryawan() {
+        bersihkanLayar();
+        tampilkanKaryawan();
         System.out.print("Masukkan ID karyawan yang ingin diperbarui: ");
         int id = scanner.nextInt();
         scanner.nextLine();
 
-        for (Employee emp : employees) {
-            if (emp.getId() == id) {
+        for (Karyawan karyawan : daftarKaryawan) {
+            if (karyawan.getId() == id) {
                 System.out.println("Pilih bagian yang ingin diperbarui:");
                 System.out.println("1. Nama");
                 System.out.println("2. Posisi");
                 System.out.println("3. Gaji");
                 System.out.print("Pilihan: ");
-                int option = scanner.nextInt();
+                int opsi = scanner.nextInt();
                 scanner.nextLine();
 
-                switch (option) {
+                switch (opsi) {
                     case 1:
                         System.out.print("Masukkan Nama baru: ");
-                        emp.setName(scanner.nextLine());
+                        karyawan.setNama(scanner.nextLine());
                         break;
                     case 2:
                         System.out.println("Pilih Posisi baru:");
@@ -154,54 +141,54 @@ public class SistemManajemenKaryawan {
                         System.out.println("2. Supervisor");
                         System.out.println("3. Manajer");
                         System.out.print("Pilihan: ");
-                        int posChoice = scanner.nextInt();
+                        int posisiBaru = scanner.nextInt();
                         scanner.nextLine();
-                        emp.setPosition(posChoice == 1 ? "Teknisi" : posChoice == 2 ? "Supervisor" : "Manajer");
+                        karyawan.setPosisi(posisiBaru == 1 ? "Teknisi" : posisiBaru == 2 ? "Supervisor" : "Manajer");
                         break;
                     case 3:
                         System.out.print("Masukkan Gaji baru: ");
-                        emp.setSalary(scanner.nextDouble());
+                        karyawan.setGaji(scanner.nextDouble());
                         scanner.nextLine();
                         break;
                     default:
                         System.out.println("Pilihan tidak valid.");
-                        pressEnterToContinue();
+                        tekanEnterUntukLanjut();
                         return;
                 }
                 System.out.println("Data karyawan diperbarui!");
-                pressEnterToContinue();
+                tekanEnterUntukLanjut();
                 return;
             }
         }
         System.out.println("Karyawan tidak ditemukan.");
-        pressEnterToContinue();
+        tekanEnterUntukLanjut();
     }
 
-    private static void deleteEmployee() {
-        clearScreen();
-        displayEmployees();
+    private static void hapusKaryawan() {
+        bersihkanLayar();
+        tampilkanKaryawan();
         System.out.print("Masukkan ID karyawan yang ingin dihapus: ");
         int id = scanner.nextInt();
         scanner.nextLine();
 
-        for (Employee emp : employees) {
-            if (emp.getId() == id) {
-                employees.remove(emp);
+        for (Karyawan karyawan : daftarKaryawan) {
+            if (karyawan.getId() == id) {
+                daftarKaryawan.remove(karyawan);
                 System.out.println("Karyawan berhasil dihapus!");
-                pressEnterToContinue();
+                tekanEnterUntukLanjut();
                 return;
             }
         }
         System.out.println("Karyawan tidak ditemukan.");
-        pressEnterToContinue();
+        tekanEnterUntukLanjut();
     }
 
-    private static void clearScreen() {
+    private static void bersihkanLayar() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
 
-    private static void pressEnterToContinue() {
+    private static void tekanEnterUntukLanjut() {
         System.out.println("\nTekan Enter untuk melanjutkan...");
         scanner.nextLine();
     }
